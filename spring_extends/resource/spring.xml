@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+   <!--<bean id="user" class="com.yuchen.entity.User" >
+       <property name="id" value="1"/>
+       <property name="name" value="于晨"/>
+       <property name="age" value="22"/>
+   </bean>
+    &lt;!&ndash; user1继承user &ndash;&gt;
+    <bean id="user1" class="com.yuchen.entity.User" parent="user">
+        &lt;!&ndash;在继承父类属性的基础上进行属性覆盖&ndash;&gt;
+        <property name="name" value="张三"/>
+    </bean>-->
+    <bean id="user" class="com.yuchen.entity.User" depends-on="car">
+        <property name="id" value="1"/>
+        <property name="name" value="于晨"/>
+        <property name="age" value="22"/>
+    </bean>
+    <bean id="car" class="com.yuchen.entity.Car">
+        <property name="id" value="1"/>
+        <property name="brand" value="宝马"/>
+    </bean>
+
+</beans>

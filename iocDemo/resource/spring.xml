@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+   <!-- 通过无参的构造函数创建对象 -->
+    <!--<bean id="student" class="com.yuchen.entity.Student">
+        <property name="id" value="1"></property>
+        &lt;!&ndash;<property name="name" value="于晨"></property>&ndash;&gt;
+        &lt;!&ndash; 若属性值中含有特殊符号，可以使用<![CDATA[data]]进行赋值 &ndash;&gt;
+        <property name="name">
+            <value><![CDATA[&张三&]]></value>
+        </property>
+        <property name="age" value="22"></property>
+    </bean>-->
+    <!--此方法有一个弊端，当 spring.xml 中配置两个 Student 的 bean 时程序会抛出异常，因为此时两个 bean 都是由 Student 类生成的，IoC 容器无法将两个 bean 都返回，必须指定一个唯一的 bean。-->
+    <!--<bean id="student1" class="com.yuchen.entity.Student">
+        <property name="id" value="1"></property>
+        <property name="name">
+            <value><![CDATA[&张三&]]></value>
+        </property>
+        <property name="age" value="23"></property>
+    </bean>-->
+
+    <!-- 通过有参函数创建对象 -->
+    <!--<bean id="sutdent2" class="com.yuchen.entity.Student">
+        <constructor-arg name="id" value="1"></constructor-arg>
+        <constructor-arg name="name" value="于晨"></constructor-arg>
+        <constructor-arg name="age" value="22" ></constructor-arg>
+    </bean>-->
+
+    <!-- 除了通过指定name对应参数外，还可以根据参数的下标进行赋值 下标是从0开始-->
+    <!--<bean id="sutdent3" class="com.yuchen.entity.Student">
+        <constructor-arg index="0" value="1"></constructor-arg>
+        <constructor-arg index="1" value="于晨"></constructor-arg>
+        <constructor-arg index="2" value="22" ></constructor-arg>
+    </bean>-->
+
+    <!-- 若想用IOC管理多个对象，且多个对象之间有联系，例如创建一个Classes类，并将此类作为Student的一个属性 -->
+    <!-- 创建一个Classes对象 -->
+    <!--<bean id="classes" class="com.yuchen.entity.Classes">
+        <property name="id" value="1"></property>
+        <property name="name" value="Java"></property>
+    </bean>
+    &lt;!&ndash; 创建Student对象 &ndash;&gt;
+    <bean id="student4" class="com.yuchen.entity.Student">
+        <property name="id" value="1"></property>
+        <property name="name" value="于晨"></property>
+        <property name="age" value="22"></property>
+        &lt;!&ndash; 将Classes对象赋值给Student对象 通过ref属性将其它的bean赋值给当前bean，这种方式也叫依赖注入(DI) DI是将不同的对象进行关联的一种方式， 是IOC的具体实现方式&ndash;&gt;
+        <property name="classes" ref="classes"></property>
+    </bean>-->
+
+    <!-- 集合性依赖注入 -->
+    <!-- 创建Classes对象 -->
+    <bean id="classes" class="com.yuchen.entity.Classes">
+        <property name="id" value="1"></property>
+        <property name="name" value="Java"></property>
+        <property name="students">
+            <!-- 集合属性通过 list 标签和 ref 标签完成注入，ref 的 bean 属性指向需要注入的 bean 对象 -->
+            <list>
+                <ref bean="sutdent5"></ref>
+                <ref bean="sutdent6"></ref>
+            </list>
+        </property>
+    </bean>
+    <!-- 创建两个Student对象 -->
+    <bean id="sutdent5" class="com.yuchen.entity.Student">
+        <constructor-arg name="id" value="1"></constructor-arg>
+        <constructor-arg name="name" value="于晨"></constructor-arg>
+        <constructor-arg name="age" value="22" ></constructor-arg>
+    </bean>
+    <bean id="sutdent6" class="com.yuchen.entity.Student">
+        <constructor-arg name="id" value="2"></constructor-arg>
+        <constructor-arg name="name" value="张三"></constructor-arg>
+        <constructor-arg name="age" value="22" ></constructor-arg>
+    </bean>
+</beans>
